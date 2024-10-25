@@ -7,14 +7,14 @@ ________________________________________________________________________________
 
 Usage Instructions :
 
-1. move objects.py and setup.py in your project folder (you must move to just project folder , not any folder ).
+1. move objects.py and Setup.py in your project folder (you must move to just project folder , not any folder ).
 2. install tkinter library , if tkinter library is not installed in your vscode.
 3. run setup.py in your vscode.
 4. enter your repository address in first text box entry.
 5. enter the branch that you want to move project in that at second text box entry.
 6. enter a message commit in third text box entry.
 7. Click from the 'git init' button in order to the 'git push' button.
-8. If the push operation is successful, you will see the message 'Push to "{cmd_ob.branch}" branch operation was successful' at the end of the terminal and the textbox program messages. :)
+8. If the push operation is successful, you will see the message 'Push to "{branch}" branch operation was successful' at the end of the terminal and the textbox program messages. :)
 
 _________________________________________________________________________________________________________
 
