@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 # Transmitter from VScode to GitHub
 
 version 1
@@ -20,6 +21,9 @@ Usage Instructions :
 _________________________________________________________________________________________________________
 
 Good luck 🎉🚀 ;)
+=======
+# Transmitter-project-to-GitHub
+>>>>>>> bdf96c724d4e080c7d9e05586c5f533f11a4578b
 =======
 # Transmitter-project-to-GitHub
 >>>>>>> bdf96c724d4e080c7d9e05586c5f533f11a4578b
