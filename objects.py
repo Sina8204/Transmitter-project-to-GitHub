@@ -1,3 +1,4 @@
+import os
 import subprocess
 
 def run_command(command):
@@ -10,6 +11,10 @@ def run_command(command):
 class ready_command ():
     def __init__(self):
         self.branch = ''
+        self.size_project = 0
+        self.unit = "Mb" # Mb = Megabyte ; Kb : Kilobyte ; Gb : Gigabyte
+        self.paw = 1
+    #
     def git_init (self):
         return run_command("git init")[0]
     #
@@ -37,3 +42,32 @@ class ready_command ():
     #
     def git_push (self):
         return run_command (f"git push -u origin {self.branch}")
+    #
+    def delete_git (self):
+        return run_command ("Remove-Item -Recurse -Force .git")
+    #
+    def project_size (self, start_path='.' , unit = "Mb"):
+        # بررسی سایز پروژه
+        #"Get-ChildItem -Recurse | Measure-Object -Property Length -Sum" >>>> a cmd command to get project size that give you with Byte
+        self.unit = unit
+        match self.unit :
+            case "Kb" : self.paw = 1
+            case "Mb" : self.paw = 2
+            case "Gb" : self.paw = 3
+            case _ : self.paw , self.unit = 0 , 'Byte'
+        total_size = 0
+        for dirpath, dirnames, filenames in os.walk(start_path):
+            for f in filenames:
+                fp = os.path.join(dirpath, f)
+                total_size += os.path.getsize(fp)
+        size_in_megabytes = total_size / (1024 ** self.paw)
+        print(f"Project size: {size_in_megabytes:.2f} {self.unit}")
+        return f"Project size: {size_in_megabytes:.2f} {self.unit}"
+
+
+class text_tools :
+    def repName (self , rep_link : str):
+        rep_link = rep_link.split('/')
+        rep_name = rep_link.pop()
+        rep_name = rep_name.replace('.git', '')
+        return rep_name

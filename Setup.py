@@ -1,12 +1,104 @@
 import tkinter as tk
 from objects import ready_command as rc
+from objects import text_tools as tt
+from tkinter import ttk
+from datetime import datetime
 import subprocess
 
 pos_x = 10
 pos_y = 100
 distance = 35
+default_entery_adress_text = "Enter your Repository adress"
+default_entery_branch_text = "Enter your branch name"
+default_entery_commitMessage_text = "Enter your commit"
+
+can_write_in_commitEntry = False
 
 cmd_ob = rc()
+rep_ob = tt()
+
+
+def on_combobox_select (event):
+    selected = combobox_commitTools.get()
+    DateTime = str(datetime.now()).split(' ')
+    calender = DateTime[0]
+    clock = DateTime[1]
+    if 'https://github.com/' in entry_address.get() or '.git' in entry_address.get():
+        rep_name = rep_ob.repName(entry_address.get())
+    else : pass
+    if entry_CommitMessage.get() != default_entery_commitMessage_text or can_write_in_commitEntry:
+        match selected:
+            
+            case "Repository name" : 
+                if entry_CommitMessage.get() == default_entery_commitMessage_text and can_write_in_commitEntry:
+                    entry_CommitMessage.delete(0 , tk.END)
+                    entry_CommitMessage.config(fg = 'black')
+                entry_CommitMessage.insert(tk.END , f'{rep_name} ')
+            case "Branch name" :
+                if entry_CommitMessage.get() == default_entery_commitMessage_text and can_write_in_commitEntry:
+                    entry_CommitMessage.delete(0 , tk.END)
+                    entry_CommitMessage.config(fg = 'black')
+                entry_CommitMessage.insert(tk.END , f'{entry_branch.get()} ')
+            case "Calender" :
+                if entry_CommitMessage.get() == default_entery_commitMessage_text and can_write_in_commitEntry:
+                    entry_CommitMessage.delete(0 , tk.END)
+                    entry_CommitMessage.config(fg = 'black')
+                entry_CommitMessage.insert(tk.END , f'{calender} ')
+            case "Time" :
+                if entry_CommitMessage.get() == default_entery_commitMessage_text and can_write_in_commitEntry:
+                    entry_CommitMessage.delete(0 , tk.END)
+                    entry_CommitMessage.config(fg = 'black')
+                entry_CommitMessage.insert(tk.END , f'{clock} ')
+
+def entry_events (entry_name):
+    # For better management of these functions , I placed them inside a function 
+    # so that I can hide them in VS cod when I don't need them.
+    def on_entryAdress_click (event): #when clicked on address entry , its text will be delete
+        if entry_address.get() == default_entery_adress_text :
+            entry_address.delete(0 , tk.END)
+            entry_address.config(fg = 'black')
+    #
+    def on_entryBranch_click (event): #when clicked on entry Branch entry , its text will be delete
+        if entry_branch.get() == default_entery_branch_text :
+            entry_branch.delete(0 , tk.END)
+            entry_branch.config(fg = 'black')
+    #
+    def on_entryCommitMessage_click (event): #when clicked on Commit messege entry , its text will be delete
+        if entry_CommitMessage.get() == default_entery_commitMessage_text :
+            entry_CommitMessage.delete(0 , tk.END)
+            entry_CommitMessage.config(fg = 'black')
+        global can_write_in_commitEntry
+        can_write_in_commitEntry = True
+    #
+    # Focus out function :
+    # These functions check the entry text boxes. if they contain any value , they do nothing ,
+    # but if they are empty , they write the initial text in gray color inside them. 
+    def on_focus_out_adress(event):
+        if entry_address.get() == '':
+            entry_address.insert(0 , default_entery_adress_text)
+            entry_address.config(fg = 'grey')
+    #
+    def on_focus_out_branch(event):
+        if entry_branch.get() == '':
+            entry_branch.insert(0 , default_entery_branch_text)
+            entry_branch.config(fg = 'grey')
+    #
+    def on_focus_out_commit(event):
+        if entry_CommitMessage.get() == '':
+            entry_CommitMessage.insert(0 , default_entery_commitMessage_text)
+            entry_CommitMessage.config(fg = 'grey')
+    #
+    match entry_name :
+        #if click in entry box to writing , entry box will be empty
+        case 'adress' : return on_entryAdress_click
+        case 'branch' : return on_entryBranch_click
+        case 'commit' : return on_entryCommitMessage_click
+        #if entry box be empty , these cases will write the gray texts
+        case 'adress_out' : return on_focus_out_adress
+        case 'branch_out' : return on_focus_out_branch
+        case 'commit_out' : return on_focus_out_commit
+
+
 
 def git_init():
     answer = cmd_ob.git_init()
@@ -48,11 +140,16 @@ def git_push():
     if answer[1].returncode == 0:
         print("Push operation was successful :)")
         Termina_textBox.insert(tk.END , str(answer[1]) + f'\n\nPush to "{cmd_ob.branch}" branch operation was successful :)\n')
+        cmd_ob.delete_git()
+        print ("git folder deleted ;)")
     else:
         print("we take an error")
         print (answer[0])
         Termina_textBox.insert(tk.END , str(answer[1]) + '\n')
     return str(answer)
+
+def project_size ():
+    Termina_textBox.insert(tk.END , cmd_ob.project_size(unit = combobox_unit.get()) + '\n')
 
 
 def set_window_size(root, width_ratio, height_ratio): # this take our monitor siza and make a window with our monitor details 
@@ -70,13 +167,28 @@ root.title("Transmitter to GitHub")
 set_window_size(root, width_ratio=0.385, height_ratio=0.8)
 
 entry_address = tk.Entry (root, width=50) #text box to enter files adress
+entry_address.insert(0 , default_entery_adress_text)
+entry_address.bind('<FocusIn>' , entry_events('adress'))
+entry_address.bind('<FocusOut>' , entry_events('adress_out'))
 entry_address.place (x = pos_x , y = pos_y - 90)
 
 entry_branch = tk.Entry (root, width=50) #text box to enter files adress
+entry_branch.insert(0 , default_entery_branch_text)
+entry_branch.bind('<FocusIn>' , entry_events('branch'))
+entry_branch.bind('<FocusOut>' , entry_events('branch_out'))
 entry_branch.place (x = pos_x , y = pos_y - 60)
 
 entry_CommitMessage = tk.Entry (root, width=50) #text box to enter files adress
+entry_CommitMessage.insert(0 , default_entery_commitMessage_text)
+entry_CommitMessage.bind('<FocusIn>' , entry_events('commit'))
+entry_CommitMessage.bind('<FocusOut>' , entry_events('commit_out'))
 entry_CommitMessage.place (x = pos_x , y = pos_y - 30)
+
+
+combobox_commitTools = ttk.Combobox (root , values= ["Repository name" , "Branch name" , "Calender" , "Time"] , state='readonly' , width= 22)
+combobox_commitTools.place (x = pos_x + (distance * 5) + 140 , y = pos_y - 31)
+combobox_commitTools.set ("Select an item to write it")
+combobox_commitTools.bind("<<ComboboxSelected>>" , on_combobox_select)
 
 button_GitInit = tk.Button (root, text=" git init          ", command=git_init)
 button_GitInit.place (x = pos_x , y = pos_y)
@@ -99,11 +211,15 @@ button_GitCommit.place (x = pos_x , y = pos_y + (distance * 5))
 button_GitPush = tk.Button (root, text=" git push       ", command=git_push)
 button_GitPush.place (x = pos_x , y = pos_y + (distance * 6))
 
+button_projectSize = tk.Button (root, text=" Project size", command= project_size)
+button_projectSize.place (x = pos_x + (distance * 3) , y = pos_y)
+
 Termina_textBox = tk.Text(root, width=70 , height=20)
 Termina_textBox.place (x = pos_x , y = pos_y + (distance * 7))
 
-
-
+combobox_unit = ttk.Combobox (root , values= ["Kb" , "Mb" , "Gb" , "Byte"] , state='readonly' , width= 5)
+combobox_unit.place (x = pos_x + (distance * 5) + 10 , y = pos_y + 3)
+combobox_unit.set ("Mb")
 
 
 root.mainloop()
