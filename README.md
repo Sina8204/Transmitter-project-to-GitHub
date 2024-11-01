@@ -19,3 +19,10 @@ Usage Instructions :
 _________________________________________________________________________________________________________
 
 Good luck 🎉🚀 ;)
+
+# Version 2
+In version 2 :
+1) added project size button
+2) added some text in entries to better guidance
+3) added a combobox for write some need to enter in commit text entry (like repository name , branch name , etc)
+4) added a cammand to delete git folder after push project in the code script (objects.py) --> run_command ('Remove-Item -Recurse -Force .git')
