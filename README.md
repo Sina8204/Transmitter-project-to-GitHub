@@ -26,3 +26,9 @@ In version 2 :
 2) added some text in entries to better guidance
 3) added a combobox for write some need to enter in commit text entry (like repository name , branch name , etc)
 4) added a cammand to delete git folder after push project in the code script (objects.py) --> run_command ('Remove-Item -Recurse -Force .git')
+
+![Alt Text]("C:\Users\0and1\Downloads\رفع خطای 403 هنگام پوش کردن.png"
+"C:\Users\0and1\Downloads\objects.py"
+"C:\Users\0and1\Downloads\Setup.py"
+"C:\Users\0and1\Downloads\test.py")
+
