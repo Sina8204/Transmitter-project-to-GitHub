@@ -58,7 +58,7 @@ This tool is designed for developers who want a simple, visual way to interact w
 ```bash
 git clone <your-repository>
 cd <project-folder>
-python main.py
+python TPTG_V3.py
 ```
 
 ---
