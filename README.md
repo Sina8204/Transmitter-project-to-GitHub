@@ -87,8 +87,8 @@ These ensure Git commands work even when SSL issues occur.
 ## 📁 Project Structure
 
 ```
-GitHubTransmitter/
-│── main.py
+TransmitterProjectToGitHub/
+│── TPTG_V3.py
 │── README.md
 │── /assets (optional)
 ```
@@ -153,7 +153,7 @@ You may use or modify this project freely.
 ```bash
 git clone <آدرس مخزن>
 cd <پوشه پروژه>
-python main.py
+python TPTG_V3.py
 ```
 
 ---
@@ -182,10 +182,10 @@ python main.py
 ## 📁 ساختار پروژه
 
 ```
-GitHubTransmitter/
-│── main.py
+TransmitterProjectToGitHub/
+│── TPTG_V3.py
 │── README.md
-│── /assets (اختیاری)
+│── /assets (optional)
 ```
 
 ---
