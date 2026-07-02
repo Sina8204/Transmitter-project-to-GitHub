@@ -1,6 +1,3 @@
-# 🌐 Languages  
-[English](#-english-version) | [فارسی](#نسخه-فارسی-)
-
 ## 🇬🇧 English Version
 
 # GitHub Transmitter  
