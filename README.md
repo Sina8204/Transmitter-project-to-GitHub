@@ -1,5 +1,5 @@
 # 🌐 Languages  
-[English](#-english-version) | [فارسی](#نسخه-فارسی-)
+[English](#-english-version) | [نسخه-فارسی-](#نسخه)
 
 ## 🇬🇧 English Version
 
